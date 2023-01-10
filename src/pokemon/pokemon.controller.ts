@@ -21,11 +21,6 @@ export class PokemonController {
     return this.pokemonService.create(createPokemonDto);
   }
 
-  @Get()
-  findAll() {
-    return this.pokemonService.findAll();
-  }
-
   @Get(':term')
   findOne(@Param('term') term: string) {
     return this.pokemonService.findOne(term);

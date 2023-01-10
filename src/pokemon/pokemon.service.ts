@@ -29,10 +29,6 @@ export class PokemonService {
     }
   }
 
-  findAll() {
-    return `This action returns all pokemon`;
-  }
-
   async findOne(term: string) {
     let pokemon: Pokemon;
     if (!isNaN(+term)) {
@@ -71,8 +67,11 @@ export class PokemonService {
   }
 
   async remove(id: string) {
-    const result = this.pokemonModel.findByIdAndDelete(id);
-    return result;
+    const { deletedCount } = await this.pokemonModel.deleteOne({ _id: id });
+    if (deletedCount === 0) {
+      throw new BadRequestException(`Pokemon with id "${id}" not found`);
+    }
+    return;
   }
 
   private handleExceptions(error: any) {
