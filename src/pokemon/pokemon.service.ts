@@ -17,7 +17,7 @@ export class PokemonService {
     @InjectModel(Pokemon.name)
     private readonly pokemonModel: Model<Pokemon>,
   ) {}
-  //CREATE
+
   async create(createPokemonDto: CreatePokemonDto) {
     createPokemonDto.name = createPokemonDto.name.toLocaleLowerCase();
 
@@ -27,6 +27,9 @@ export class PokemonService {
     } catch (error) {
       this.handleExceptions(error);
     }
+  }
+  async findAll() {
+    return this.pokemonModel.find().limit(5).skip(5);
   }
 
   async findOne(term: string) {
