@@ -17,14 +17,15 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 @Controller('pokemon')
 export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
-  @Get()
-  findAll(@Query() paginationDto: PaginationDto) {
-    return this.pokemonService.findAll();
-  }
 
   @Post()
   create(@Body() createPokemonDto: CreatePokemonDto) {
     return this.pokemonService.create(createPokemonDto);
+  }
+
+  @Get()
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.pokemonService.findAll(paginationDto);
   }
 
   @Get(':term')

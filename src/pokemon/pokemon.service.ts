@@ -5,6 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
+
 import {
   BadRequestException,
   InternalServerErrorException,
@@ -28,8 +30,17 @@ export class PokemonService {
       this.handleExceptions(error);
     }
   }
-  async findAll() {
-    return this.pokemonModel.find().limit(5).skip(5);
+  findAll(paginationDto: PaginationDto) {
+    const { limit = 10, offset = 0 } = paginationDto;
+
+    return this.pokemonModel
+      .find()
+      .limit(limit)
+      .skip(offset)
+      .sort({
+        no: 1,
+      })
+      .select('-__v');
   }
 
   async findOne(term: string) {
