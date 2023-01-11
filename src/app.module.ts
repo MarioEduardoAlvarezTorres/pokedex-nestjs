@@ -10,10 +10,12 @@ import { SeedModule } from './seed/seed.module';
 
 import { ConfigModule } from '@nestjs/config';
 import { EnvConfiguation } from './config/env.config';
+import { JoiValidationSchema } from './config/joi.validation';
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [EnvConfiguation],
+      validationSchema: JoiValidationSchema,
     }),
 
     ServeStaticModule.forRoot({
